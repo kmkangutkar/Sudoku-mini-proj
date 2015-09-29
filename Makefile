@@ -5,4 +5,4 @@ start1.o : start1.c pstack.h
 istack.o: istack.c istack.h
 	cc -c istack.c
 pstack.o: pstack.c pstack.h
-	cc - cpstack.c
+	cc -c pstack.c
