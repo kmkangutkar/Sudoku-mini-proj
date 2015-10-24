@@ -51,18 +51,15 @@ int* count(int num){
 	}
 	return &counter[0];
 }
-int flag = 0;
 istack pos_val(int* arr){
 	istack s, *p, t;
 	int val;
 	i_init(&s);
 	i_init(&t);
 	int i;
-	flag = 0;
 	for(i = 9; i > 0; i--){
 		if(arr[i] == 0){
 			i_push(&s, i);	
-			flag = 1;
 		}	
 	}
 	p = &s;
@@ -78,6 +75,7 @@ istack pos_val(int* arr){
 	printf("\n");
 	//p = &t;
 	return t;
+//	return s;
 }
 
 int *scan(int **puz, int i, int j){
@@ -418,7 +416,7 @@ int main(){
 			printpuz(puz);
 			return 0;	
 		}
-		printf("zero at %d %d\n", cell[count - 1].x, cell[count - 1].y);
+		printf("zero at %d %d\n", i, j);
 		p = scan(puz, i, j);
 		w = pos_val(p);
 		check:
@@ -432,7 +430,7 @@ int main(){
 				printf("change back to %d\n", puz[i][j]);
 				count--;
 				printf("countback = %d\n", count);
-				printpuz(puz);
+			//	printpuz(puz);
 				i = cell[count].x;
 				j = cell[count].y;
 				printf("go back to %d %d\n", i, j);
@@ -441,7 +439,7 @@ int main(){
 		}
 		else if(!i_empty(&w)){
 			val = i_pop(&w);
-			printf("Val = %d\n", val);
+			printf("Count = %d Val = %d\n",count, val);
 			push(&POS, w);
 			cell[count].x = i;
 			cell[count].y = j;
