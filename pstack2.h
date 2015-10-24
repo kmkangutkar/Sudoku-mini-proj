@@ -1,5 +1,5 @@
 #include"istack.h"
-#define PSIZE 16
+#define PSIZE 81
 typedef struct pstack{
 	istack arr[PSIZE];
 	int i;	
