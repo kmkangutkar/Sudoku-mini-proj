@@ -4,7 +4,19 @@
 #define ROW 9
 #define COL 9
 #define CLASH 1
+#define WRONG_IP 43
 int found = 0;
+
+int checker(int *c){
+	int i;
+	for(i = 1; i < 10; i++){
+		if(c[i] > 1){
+			return WRONG_IP;
+		}
+	}
+	return 0;
+}
+
 void empty_cell(int **p, int *i, int *j){
 	int a, b;
 	int **k;
@@ -33,6 +45,19 @@ void empty_cell(int **p, int *i, int *j){
 	
 }
 
+int* count_check(int num){
+	int i;
+	static int counter[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	if(num == -1){
+		for(i = 0; i < 10; i++){
+			counter[i] = 0;
+		}
+	}
+	else{
+		counter[num] = counter[num] + 1;
+	}
+	return &counter[0];
+}
 int* count(int num){
 	int i;
 	static int counter[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -79,34 +104,47 @@ istack pos_val(int* arr){
 }
 
 int *scan(int **puz, int i, int j){
-	int *c;
+	int *c, *d;
 	c = count(-1);
 	int n, p, a = 0, num;
 	int arr[COL];
-	
+	int check;
 	//scan row
 	for(n = 0; n < COL; n++){
 		num = arr[a++] = puz[i][n];
-		count(num);
+		c = count(num);
+		d = count_check(num);	
+		check = checker(c);
+		if(check == WRONG_IP){
+			printf("wrong input\n");
+			return NULL;
+		}
 	}
 	printf("scanROW\n");
 	for(n = 0; n < COL; n++){
 		printf("%d ", arr[n]);
 	}
 	printf("\n");
-	
+	d = count_check(-1);
 	//scan column
 	a = 0;
 	for(n = 0; n < ROW; n++){
 		num = arr[a++] = puz[n][j];
 		count(num);
+		d = count_check(num);	
+		check = checker(c);
+		if(check == WRONG_IP){
+			printf("wrong input\n");
+			return NULL;
+		}
+
 	}
 	printf("scanCOL\n");
 	for(n = 0; n < ROW; n++){
 		printf("%d ", arr[n]);
 	}
 	printf("\n");
-	
+	d = count_check(-1);	
 	//scan block
 	a = 0;
 	//first decide which block, then how to access each element//
@@ -117,6 +155,13 @@ int *scan(int **puz, int i, int j){
 				for(p = 0; p < COL/3; p++){
 					num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}		
 		}
@@ -126,6 +171,13 @@ int *scan(int **puz, int i, int j){
 				for(p = COL/3; p < (2 * COL / 3); p++){	
 					num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}	
 		}
@@ -135,6 +187,13 @@ int *scan(int **puz, int i, int j){
 				for(p = (2*COL/3); p <  COL; p++){	
 					num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}	
 		}
@@ -148,15 +207,29 @@ int *scan(int **puz, int i, int j){
 				for(p = 0; p < COL/3; p++){
 		 			num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}		
-		}
+		}	
 		else if(j >= COL/3 && j < (2*COL/3)){
 			//in middle middle block
 			for(n = ROW/3; n < (2*ROW/3); n++){
 				for(p = COL/3; p < (2 * COL / 3); p++){	
 					num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}	
 		}	
@@ -166,6 +239,13 @@ int *scan(int **puz, int i, int j){
 				for(p = (2*COL/3); p <  COL; p++){	
 					num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}	
 		}
@@ -177,28 +257,52 @@ int *scan(int **puz, int i, int j){
 				for(p = 0; p < COL/3; p++){
 		 			num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}		
 		}
+		d = count_check(-1);	
 		else if(j >= COL/3 && j < (2*COL/3)){
 			//in bottom middle block
 			for(n = (2*ROW/3); n < ROW; n++){
 				for(p = COL/3; p < (2 * COL / 3); p++){	
 					num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}	
 		}	
+		d = count_check(-1);	
 		else if(j >= (2*COL/3) && j < COL){
 			//in bottom right block
 			for(n = (2*ROW/3); n < ROW; n++){
 				for(p = (2*COL/3); p <  COL; p++){	
 					num = arr[a++] = puz[n][p];
 					c = count(num);	
+					d = count_check(num);	
+					check = checker(c);
+					if(check == WRONG_IP){
+						printf("wrong input\n");
+						return NULL;
+					}
+					d = count_check(-1);	
 				}
 			}	
 		}
 	}	
+	d = count_check(-1);	
 	printf("scanBLOCK\n");
 	for(n = 0; n < ROW; n++){
 		printf("%d ", arr[n]);
@@ -418,6 +522,10 @@ int main(){
 		}
 		printf("zero at %d %d\n", i, j);
 		p = scan(puz, i, j);
+		if(p == NULL){
+			printf("Wrong input\n");
+			return 0;	
+		}
 		w = pos_val(p);
 		check:
 		if(i_empty(&w)){
