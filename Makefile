@@ -1,7 +1,7 @@
-project: generate1.o istack.o pstack2.o
-	cc generate1.o istack.o pstack2.o -o project
-generate1.o : generate1.c pstack2.h
-	cc -c generate1.c
+project: 9x9works.o istack.o pstack2.o
+	cc 9x9works.o istack.o pstack2.o -o project
+9x9works.o : 9x9works.c pstack2.h
+	cc -c 9x9works.c
 istack.o: istack.c istack.h
 	cc -c istack.c
 pstack2.o: pstack2.c pstack2.h
