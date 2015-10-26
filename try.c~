@@ -1,0 +1,10 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+int main(){
+	int x;
+	srand(time(NULL));
+	x = rand();
+	printf("random no. = %d\nmiod 3 = %d\nmod 20 = %d\n", x, x%3, x%20);
+	return 0;
+}
