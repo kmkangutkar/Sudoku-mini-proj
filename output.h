@@ -25,4 +25,4 @@ void move_cursor(char ip);
 void user_input(int*, int *, char);
 void print_digit(char);
 void position(int*, int*);
-int score(int, int, int);
+int moves(int);

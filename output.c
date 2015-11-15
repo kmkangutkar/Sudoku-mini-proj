@@ -52,7 +52,7 @@ void print_board(void){
 	attron(A_BOLD | A_UNDERLINE);
 	mvprintw(1.5, 40, "SUDOKU SOLVER AND GENERATOR");
 	attroff(A_UNDERLINE);
-	mvprintw(5, 80, "SCORE: 10000");
+	mvprintw(5, 80, "MOVES : ");
 	keytable();
 	init_pair(1, COLOR_BLUE, COLOR_BLACK);
 	init_pair(2, COLOR_YELLOW, COLOR_BLACK);
@@ -201,12 +201,12 @@ void user_input(int *i, int *j, char ip){
 	return;
 }
 
-int score(int num, int move, int curr_score){
+int moves(int curr_moves){
 /*calculates the score using no. of moves and num i/p and displays */
-	curr_score = curr_score - num * move; 
+	curr_moves = curr_moves - 1; 
 	int x, y;
 	getyx(stdscr, y, x);
-	mvprintw(5, 87, "%d\t", curr_score);
+	mvprintw(5, 88, "%d\t\t", curr_moves);
 	move(y, x);
-	return curr_score;
+	return curr_moves;
 }

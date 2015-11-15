@@ -26,8 +26,8 @@ int main(){
 	int **puz, **soln = NULL;
 	int i, j, p, q, check;
 	char ip, c, ch[3];
-	int moves = 0;
-	int curr_score = 10000;
+	int max_moves;
+	int curr_moves = 101; //total moves allowed
 	f.found = 0;
 	f.flag = 0;
 	puz = (int **)malloc(sizeof(int*) * ROW);
@@ -45,6 +45,12 @@ int main(){
 	while(ip != ESC){
 		switch(ip){
 			case ' ':
+				if(curr_moves == 0){
+					position(&q, &p);
+        	        		mvprintw(15, 80, "NO MOVES LEFT\t\t\t");
+        	        		move(q, p);		
+        	        		break;
+				}
 				position(&q, &p);
                 		mvprintw(15, 80, "INPUT MODE\t\t\t");
                 		move(q, p);
@@ -56,15 +62,13 @@ int main(){
 						position(&q, &p);
 						mvprintw(15, 80, "CORRECT!\t\t\t");
 						move(q, p);
-						moves++;
-						curr_score = score(atoi(&ip), moves, curr_score);
+						curr_moves = moves(curr_moves);
 					}
 					else{ 
 						position(&q, &p);
 						mvprintw(15, 80, "INCORRECT!\t\t\t");
 						move(q, p);
-						moves++;
-						curr_score = score(atoi(&ip), moves, curr_score);
+						curr_moves = moves(curr_moves);
 					}
 				}
 				else if(!soln && f.flag){
@@ -85,9 +89,8 @@ int main(){
                 			mvprintw(15, 80, "SUDOKU SOLVED!!\t\t\t");
                 			move(q, p);
                 			soln = NULL;
-                			moves = 0;
-                			curr_score = 10000;
-                			score(0, 0, curr_score);
+                			curr_moves = 101;
+                			moves(curr_moves);
                 		}
                 		break;
                 	default: 
@@ -121,10 +124,9 @@ int main(){
 					position(&q, &p);
                 			mvprintw(15, 80, "SUDOKU SOLVED!!\t\t\t");
                 			move(q, p);
-                			moves = 0;
                 			soln = NULL;
-                			curr_score = 10000;
-                			score(0, 0, curr_score);
+                			curr_moves = 101;
+                			moves(curr_moves);
 				}
 				move(4,33);
 				f.flag = 0;
@@ -139,17 +141,21 @@ int main(){
 				 	soln = generate(puz, EASY);
 				 	mvprintw(15, 80, "EASY\t\t\t\t");
 				 	move(4, 33);
+				 	curr_moves = 51;
 				 }
 				 else if(c == 'm'){
 				 	soln = generate(puz, MED);
 				 	mvprintw(15, 80, "MEDIUM\t\t\t\t");
 				 	move(4, 33);
+				 	curr_moves = 61;
 				 	}
 				 	else if(c == 'd'){
 				 		soln = generate(puz, DIF);
 				 		mvprintw(15, 80, "DIFFICULT\t\t\t\t");
 						move(4, 33);
+						curr_moves = 71;
 				 	}
+				 curr_moves = moves(curr_moves);
 				 display_puz(puz);
 				 refresh();
 				 i = j = 0;
@@ -162,8 +168,8 @@ int main(){
 					puz[i][j] = soln[i][j];
 					sprintf(ch, "%d", puz[i][j]);
 					print_digit(ch[0]);
-					moves += 2;
-					curr_score = score(10, moves, curr_score);
+					curr_moves = moves(curr_moves);
+					curr_moves = moves(curr_moves);
 				}
 				goto play;
 			case 'i'://input from user
