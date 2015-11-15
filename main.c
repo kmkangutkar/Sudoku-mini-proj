@@ -167,6 +167,7 @@ int main(){
 				}
 				goto play;
 			case 'i'://input from user
+				soln = NULL;
 				puz_init(puz);
 				display_puz(puz);
 				position(&q, &p);
