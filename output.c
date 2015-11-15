@@ -20,8 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#define ROW 9
-#define COL 9
+#include "output.h"
 
 void keytable(void){
 /*prints the table in the window*/

@@ -15,6 +15,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
+#define ROW 9
+#define COL 9
 
 void init_curses(void);
 void print_board(void);
